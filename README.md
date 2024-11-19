@@ -66,3 +66,23 @@ kubectl get all
 kubectl get all --show-labels # filter by labels
 kubectl get all --selector app=mydb
 ``` 
+Exposing Applications with Services
+```bash
+kubectl get deploy,pods
+kubectl expose deploy myweb --port=80
+kubectl get svc,deploy,pods --show-labels
+curl <service-cluster-ip> #no access
+kubectl delete svc myweb
+kubectl expose deploy myweb --port=80 --type=NodePort
+curl <node-IP-address>:<nodeport>
+```
+Configuring Ingress
+```bash
+minikube addons enable ingress
+minikube addons list
+kubectl get all -n kube-system
+sudo sh -c "echo $(minikube ip) myweb.example.com >> /etc/hosts"
+kubectl create ing myweb --rule="myweb.example.com/=myweb:80"
+kubectl describe ing myweb
+curl myweb.example.com
+``` 
