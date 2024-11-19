@@ -43,3 +43,13 @@ kubectl get all
 kubectl set image deploy myweb nginx=nginx:1.21 # update the version of NGINX
 kubectl get all
 ```
+Working with YAML Files
+```bash
+kubectl create deploy myapp --image=nginx:1.21 --replicas=3 --dry-run=client -o yaml>myapp.yaml
+kubectl apply -f myapp.yaml
+nano myapp.yaml # change to replicas=2
+kubectl apply -f myapp.yaml
+kubectl get deploy myapp -o yaml | less
+kubectl get all
+kubectl delete -f myapp.yaml
+```
