@@ -53,3 +53,16 @@ kubectl get deploy myapp -o yaml | less
 kubectl get all
 kubectl delete -f myapp.yaml
 ```
+Kubernetes Troubleshooting
+```bash
+kubectl create deploy mydb --image=mariadb
+kubectl get pods
+kubectl describe pod mydb[Tab]
+kubectl logs mydb[Tab]
+kubectl set env deploy mydb MARIADB_ROOT_PASSWORD=password
+kubectl get all --selector app=mydb
+kubectl set env deploy mydb MARIADB_ROOT_PASSWORD=password
+kubectl get all
+kubectl get all --show-labels # filter by labels
+kubectl get all --selector app=mydb
+``` 
