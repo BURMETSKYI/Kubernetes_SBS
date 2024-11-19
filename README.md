@@ -85,4 +85,13 @@ sudo sh -c "echo $(minikube ip) myweb.example.com >> /etc/hosts"
 kubectl create ing myweb --rule="myweb.example.com/=myweb:80"
 kubectl describe ing myweb
 curl myweb.example.com
+```
+Deploying Pods with Volumes
+```bash
+git clone https://github.com/sandervanvugt/kubestep.git
+cd kubestep
+kubectl apply -f podvol.yaml
+kubectl describe pod podvol
+kubectl exec podvol -c busybox1 -- touch /busy1/testfile
+kubectl exec podvol -c busybox2 -- ls -l /busy2/
 ``` 
