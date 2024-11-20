@@ -94,4 +94,15 @@ kubectl apply -f podvol.yaml
 kubectl describe pod podvol
 kubectl exec podvol -c busybox1 -- touch /busy1/testfile
 kubectl exec podvol -c busybox2 -- ls -l /busy2/
-``` 
+```
+Using PVCs and PVs
+```bash
+git clone https://github.com/sandervanvugt/kubestep.git
+cd ~/kubestep
+kubectl create namespace myvol
+kubectl apply -f pv-pvc-pod.yaml
+kubectl exec local-pv-pod -- touch /usr/share/nginx/html/testfile
+kubectl describe pv local-pv-volume
+minikube ssh
+ls /mnt/data/
+```
