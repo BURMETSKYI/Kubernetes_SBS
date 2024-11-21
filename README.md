@@ -17,6 +17,7 @@ Nginx Pod
 ```bash
 kubectl --help
 source <(kubectl completion bash)
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
 kubectl run myapp --image=nginx
 kubectl run -h | less 
 kubectl get pods
@@ -133,10 +134,13 @@ kubectl get secret mysecretdbpw -o yaml
 kubectl set env --from=secret/mysecretdbpw deploy/mydb
 kubectl get pod mydb[Tab] -o yaml | less
 ```
-Using Passwords from Secrets
+Using Secrets with Registry Credentials
 ```bash
-kubectl create secret generic mysecretdbpw --from-literal=MARIADB_ROOT_PASWORD=password
-kubectl get secret mysecretdbpw -o yaml
-kubectl set env --from=secret/mysecretdbpw deploy/mydb
-kubectl get pod mydb[Tab] -o yaml | less
+docker login
+kubectl create secret docker-registry regcreds --from-file=.dockerconfigjson=.docker/config.json
+kubectl create deploy sleepy --image=busybox --dry-run=client -o yaml -- sleep infinity>sleepy.yaml
+# Use an editoer to edit sleepy.yaml to add the following in spec.template.spec:
+imagePullSecrets:
+-  name: regcreds
+kubectl apply -f sleepy.yaml
 ``` 
