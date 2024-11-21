@@ -144,3 +144,35 @@ imagePullSecrets:
 -  name: regcreds
 kubectl apply -f sleepy.yaml
 ``` 
+Helm
+```bash
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+tar -zxvf helm-v3.0.0-linux-amd64.tar.gz
+helm version
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo list
+helm search repo bitnami
+hem search repo file
+help repo update
+helm install bitnami/mysql --generate-name
+kubectl get all
+helm show all bitnami/mysql
+helm list [--all-namespaces]
+helm status mysql-xxxx
+```
+Helm | Providing Custom Parametrs
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm show values bitnami/nginx
+helm show values bitnami/nginx | grep commonLabels
+helm show values bitnami/nginx | grep replicaCount
+vim values.yaml
+  commonLabels: "type: helmapp"
+  replicaCount: 3
+helm install bitnami /nginx --generate-name --values values.yaml
+helm list
+helm get values nginx-xxxx # shows custom values  only
+helm get values --all nginx-xxxx # shows all values
+``` 
