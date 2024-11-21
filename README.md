@@ -126,3 +126,17 @@ echo hello configmap>myindex.html
 kubectl create cm myidex --from-file=myindex.html
 kubectl create deploy mynewweb --image=nginx
 ```
+Using Passwords from Secrets
+```bash
+kubectl create secret generic mysecretdbpw --from-literal=MARIADB_ROOT_PASWORD=password
+kubectl get secret mysecretdbpw -o yaml
+kubectl set env --from=secret/mysecretdbpw deploy/mydb
+kubectl get pod mydb[Tab] -o yaml | less
+```
+Using Passwords from Secrets
+```bash
+kubectl create secret generic mysecretdbpw --from-literal=MARIADB_ROOT_PASWORD=password
+kubectl get secret mysecretdbpw -o yaml
+kubectl set env --from=secret/mysecretdbpw deploy/mydb
+kubectl get pod mydb[Tab] -o yaml | less
+``` 
