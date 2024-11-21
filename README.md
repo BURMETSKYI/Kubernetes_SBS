@@ -2,7 +2,6 @@
 ## Deployment
 
 Minikube installation
-
 ```bash
 sudo apt install git -y
 sudo -i
@@ -14,9 +13,7 @@ su - user1
 minikube start
 kubectl get all
 ```
-
 Nginx Pod
-
 ```bash
 kubectl --help
 source <(kubectl completion bash)
@@ -101,8 +98,31 @@ git clone https://github.com/sandervanvugt/kubestep.git
 cd ~/kubestep
 kubectl create namespace myvol
 kubectl apply -f pv-pvc-pod.yaml
-kubectl exec local-pv-pod -- touch /usr/share/nginx/html/testfile
+kubectl exec -n myvol local-pv-pod -- touch /usr/share/nginx/html/testfile
 kubectl describe pv local-pv-volume
 minikube ssh
 ls /mnt/data/
+```
+Using StorageClass in Minikube
+```bash
+kubectl get storageclass
+kubectl describe storageclass
+kubectl get pods -n kube-system
+kubectl apply -f pvc.yaml
+kubectl get pvc,pv
+```
+Using Variables from ConfigMaps
+```bash
+kubectl create cm mydbvars1 --from-literal=MARIADB_ROOT_PASSWORD=password
+kubectl create deploy mynewdb1 --image=mariadb
+kubectl get all --selector=mynewdb1
+kubectl set env --from=configmap/mydbvars deploy mynewdb
+kubectl get all --selector=mynewdb
+kubectl describe pod mynewdb[Tab]
+```
+Using Configuration from ConfigMaps
+```bash
+echo hello configmap>myindex.html
+kubectl create cm myidex --from-file=myindex.html
+kubectl create deploy mynewweb --image=nginx
 ```
