@@ -175,4 +175,12 @@ helm install bitnami /nginx --generate-name --values values.yaml
 helm list
 helm get values nginx-xxxx # shows custom values  only
 helm get values --all nginx-xxxx # shows all values
+```
+Kustomize | Creating a Microservice with Kustomize
+```bash
+git clone https://github.com/sandervanvugt/kubestep.git
+cat kustomization.yaml
+cat deployment.yaml
+cat service.yaml
+kubectl apply -k ./
 ``` 
